@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Tag;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,8 @@ class PostController extends Controller
     {
         //
         $post = new Post();
-        return view('admin.posts.create', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.create', ['post' => $post, 'tags' => $tags ]);
 
     }
 
@@ -60,6 +62,10 @@ class PostController extends Controller
         $data['user_id'] = Auth::id();
 
         $data['post_date'] = new DateTime();
+        $newPost = new Post();
+        $newPost->fill($data);
+        $newPost->save();
+        $newPost->tags()->sync($data['tags']);
         
         Post::create($data);
         return redirect()->route('admin.posts.index')->with('success', 'Il post ' . $data["title"] . " è stato creato con successo");
@@ -97,7 +103,8 @@ class PostController extends Controller
     {
         //
         $post = Post::findOrFail($id);
-        return view('admin.posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', ['post' => $post, 'tags' => $tags ]);
     }
 
     /**

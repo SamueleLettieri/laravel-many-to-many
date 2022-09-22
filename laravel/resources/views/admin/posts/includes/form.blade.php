@@ -19,6 +19,23 @@
 @enderror  
 
 <div class="mb-2 p-1">
+    <div>Tags</div>
+    @foreach ($tags as $tag)
+    <div class="form-check form-switch">
+        <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}">
+        <label for="input-tags" class="form-check-label">
+            {{$tag->name}}
+        </label>
+    </div>
+    @endforeach
+</div>
+@error('tags')
+    <div class="alert alert-danger">
+    {{$message}}
+    </div>
+@enderror  
+
+<div class="mb-2 p-1">
     <label for="input-post_content" class="form-label">Description</label>
     <textarea class="form-control" required name="post_content" id="input-post_content" cols="30" rows="10">{{old('post_content', $post->post_content)}}</textarea>
 </div>
