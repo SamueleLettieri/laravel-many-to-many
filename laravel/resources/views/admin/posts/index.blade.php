@@ -19,6 +19,7 @@
         <th>ID</th>
         <th>USER</th>
         <th>TITLE</th>
+        <th>TAGS</th>
         <th>Button</th>               
     </thead>
     <tbody class="text-center">
@@ -28,8 +29,17 @@
             <td>{{$post->user->name}}</td>
             <td><a href="{{route('admin.posts.show', $post->id)}}">{{$post->title}}</a></td>
             <td>
+            @if (isset($post->tags))
+                @foreach($post->tags as $tag)
+                #{{$tag->name}} 
+                @endforeach
+            @else
+                No tag selected for this post
+            @endif
+            </td>
+            <td>
                 <a href="{{route('admin.posts.edit', $post->id)}}" class="btn px-3 mx-2  btn-sm btn-primary">Edit</a>
-                <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="d-inline">
+                <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="d-inline mt_1">
                     @csrf
                     @method('DELETE')
                     <button class="btn px-3 mx-2  btn-sm btn-danger">Remove</button>

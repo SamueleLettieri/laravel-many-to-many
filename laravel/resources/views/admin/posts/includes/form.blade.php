@@ -22,10 +22,14 @@
     <div>Tags</div>
     @foreach ($tags as $tag)
     <div class="form-check form-switch">
-        <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}">
-        <label for="input-tags" class="form-check-label">
-            {{$tag->name}}
-        </label>
+        @if($errors->any())
+            <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{in_array($tag->id, old('tags', [])) ? 'checked' : ''}}>
+        @else
+            <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : ''}}>
+        @endif
+            <label for="input-tags" class="form-check-label">
+                {{$tag->name}}
+            </label>
     </div>
     @endforeach
 </div>

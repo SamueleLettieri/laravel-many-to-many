@@ -20,7 +20,7 @@
                 #{{$tag->name}} 
                 @endforeach
             @else
-            No tag selected for this post
+                No tag selected for this post
             @endif
             </h5>
             <h3 class="card-title m-3">{{$post->title}}</h3>
