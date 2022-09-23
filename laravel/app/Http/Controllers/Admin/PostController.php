@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
 use DateTime;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +28,7 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
+        $posts = Post::paginate(20);
         //where('user_id', Auth::id())->get();
         return view('admin.posts.index', compact('posts'));
     }
@@ -56,28 +57,22 @@ class PostController extends Controller
     {
         //
         $validated = $request->validate($this->validationForm);
-
+       
 
         $data = $request->all();
         $data['user_id'] = Auth::id();
 
         $data['post_date'] = new DateTime();
+
         $newPost = new Post();
         $newPost->fill($data);
         $newPost->save();
         $newPost->tags()->sync($data['tags']);
         
-        Post::create($data);
+
         return redirect()->route('admin.posts.index')->with('success', 'Il post ' . $data["title"] . " è stato creato con successo");
 
-        $post = new Post();
-        $post->title = $data['title'];
-        $post->post_content = $data['post_content'];
-        $post->post_image = $data['post_image'];
 
-
-        $post->save();
-        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**

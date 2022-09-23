@@ -40,6 +40,7 @@
         @endforelse   
     </tbody>
     </table>
+    {{ $posts->links() }}
 </div>
 
 
