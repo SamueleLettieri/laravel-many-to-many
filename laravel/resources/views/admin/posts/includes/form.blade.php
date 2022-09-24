@@ -21,16 +21,20 @@
 <div class="mb-2 p-1">
     <div>Tags</div>
     @foreach ($tags as $tag)
-    <div class="form-check form-switch">
-        @if($errors->any())
-            <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{in_array($tag->id, old('tags', [])) ? 'checked' : ''}}>
-        @else
-            <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : ''}}>
-        @endif
-            <label for="input-tags" class="form-check-label">
-                {{$tag->name}}
-            </label>
-    </div>
+        <div class="form-check form-switch">
+            @if($errors->any())
+                <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{in_array($tag->id, old('tags', [])) ? 'checked' : ''}}>
+            @else
+                <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : ''}}>
+            @endif
+                <label for="input-tags" class="form-check-label">
+                    @if(is_null($tag->name))
+                    {{$tag = 'nessun tag'}}
+                    @else
+                    {{$tag->name}}
+                    @endif
+                </label>
+        </div>
     @endforeach
 </div>
 @error('tags')

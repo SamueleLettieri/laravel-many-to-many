@@ -16,6 +16,7 @@ class PostController extends Controller
         'title' => 'required|min:3|max:255',
         'post_content' => 'required|min:10',
         'post_image' => 'required|min:3|',
+        'tags' => 'exists:tags,id'
     ];
 
 
@@ -68,7 +69,6 @@ class PostController extends Controller
         $newPost->fill($data);
         $newPost->save();
         $newPost->tags()->sync($data['tags']);
-        
 
         return redirect()->route('admin.posts.index')->with('success', 'Il post ' . $data["title"] . " è stato creato con successo");
 
