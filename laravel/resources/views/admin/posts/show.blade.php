@@ -17,7 +17,7 @@
             <h5 class="card-title m-3">
             @if (isset($post->tags))
                 @foreach($post->tags as $tag)
-                #{{$tag->name}} 
+                    {{$tag->name}}
                 @endforeach
             @else
                 No tag selected for this post

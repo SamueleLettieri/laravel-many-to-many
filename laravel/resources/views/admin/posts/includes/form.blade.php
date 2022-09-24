@@ -28,11 +28,7 @@
                 <input type="checkbox" class="form-check-input" name="tags[]" id="input-tags"  name="tags" value="{{$tag->id}}" {{$post->tags->contains($tag) ? 'checked' : ''}}>
             @endif
                 <label for="input-tags" class="form-check-label">
-                    @if(is_null($tag->name))
-                    {{$tag = 'nessun tag'}}
-                    @else
                     {{$tag->name}}
-                    @endif
                 </label>
         </div>
     @endforeach
