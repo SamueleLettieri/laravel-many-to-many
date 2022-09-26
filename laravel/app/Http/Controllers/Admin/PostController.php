@@ -9,6 +9,7 @@ use DateTime;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -64,6 +65,8 @@ class PostController extends Controller
         $data['user_id'] = Auth::id();
 
         $data['post_date'] = new DateTime();
+
+        $data['post_image'] = Storage::put('uploads', $data['post_image']);
 
         $newPost = new Post();
         $newPost->fill($data);

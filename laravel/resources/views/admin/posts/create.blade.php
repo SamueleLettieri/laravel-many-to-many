@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    <form action="{{route('admin.posts.store', $post->id)}}" method="POST">
+    <form action="{{route('admin.posts.store', $post->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @include('admin.posts.includes.form')
     </form>
